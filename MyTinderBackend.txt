@@ -1,0 +1,89 @@
+from tkinter import *
+from tinderbackend import *
+from tkinter import messagebox
+
+class TinderGUI:
+    def __init__(self):
+        self.root=Tk()
+        self.root.title("Tinder")
+        self.root.maxsize(600,600)
+        self.tinderBackend=Tinder()
+
+
+        self.lblWelcome=Label(self.root,width=25,height=2,bg='Red', font=('Arial',15,'bold'))
+        self.lblWelcome.grid(row=0,column=0)
+        self.lblWelcome.configure(text="Welcome")
+
+        btnLogin=Button(self.root,width=10, height=2, bg='White', text="Login",
+                        command=lambda: self.loginWindow()).grid(row=1,column=0)
+        btnRegister = Button(self.root, width=10, height=2, bg='White', text="Register",
+                             command=lambda: self.registerWindow()).grid(row=2, column=0)
+        btnExit = Button(self.root, width=10, height=2, bg='White', text="Exit",
+                         command=lambda: self.root.destroy()).grid(row=3, column=0)
+
+
+
+        self.root.mainloop()
+
+
+    def loginWindow(self):
+        child=Toplevel(self.root)
+        child.title("Login Screen")
+        child.maxsize(500,500)
+
+        lblLogin=Label(child,text="Email:",width=10,height=2,
+                       font=('Arial',15)).grid(row=0,column=0)
+        entEmail=Entry(child,width=33,font=('Arial',14))
+        entEmail.grid(row=0,column=1)
+
+        lblPass = Label(child, text="Password:", width=10, height=2,
+                         font=('Arial', 15)).grid(row=1, column=0)
+        entPass = Entry(child, width=33, font=('Arial', 14))
+        entPass.grid(row=1, column=1)
+
+        btnLogin=Button(child, text="Login",width=10, height=1,bg='Green',
+                        font=('Arial',15), command=lambda: self.validate(entEmail.get(),entPass.get()))
+        btnLogin.grid(row=2,column=1)
+
+    def validate(self,email,password):
+        result=self.tinderBackend.userLogin(email,password)
+
+        if result:
+            messagebox.showinfo('Success','Successfully Logged In!')
+        else:
+            messagebox.showinfo('Wrong Input', 'Invalid Login!')
+
+
+    def registerWindow(self):
+        child = Toplevel(self.root)
+        child.title("Registration Wiindow")
+        child.maxsize(500, 500)
+
+        lblName = Label(child, text="Name:", width=10, height=2,
+                         font=('Arial', 15)).grid(row=0, column=0)
+        entName = Entry(child, width=33, font=('Arial', 14))
+        entName.grid(row=0, column=1)
+
+        lblGender = Label(child, text="Gender:", width=10, height=2,
+                          font=('Arial', 15)).grid(row=1, column=0)
+        entGender = Entry(child, width=33, font=('Arial', 14))
+        entGender.grid(row=1, column=1)
+
+        lblCity = Label(child, text="City:", width=10, height=2,
+                        font=('Arial', 15)).grid(row=2, column=0)
+        entCity = Entry(child, width=33, font=('Arial', 14))
+        entCity.grid(row=2, column=1)
+
+        lblEmail = Label(child, text="Email:", width=10, height=2,
+                        font=('Arial', 15)).grid(row=3, column=0)
+        entEmail = Entry(child, width=33, font=('Arial', 14))
+        entEmail.grid(row=3, column=1)
+
+        lblPasw = Label(child, text="Password:", width=10, height=2,
+                        font=('Arial', 15)).grid(row=4, column=0)
+        entPass = Entry(child, width=33, font=('Arial', 14))
+        entPass.grid(row=4, column=1)
+
+
+
+obj=TinderGUI()
